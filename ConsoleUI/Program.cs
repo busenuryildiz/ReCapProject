@@ -3,8 +3,9 @@ using DataAccess.Concrete.InMemory;
 using System;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
+using System.Runtime.ConstrainedExecution;
 
-CarManager carManager = new CarManager(new EfCarDal());
+//CarManager carManager = new CarManager(new EfCarDal());
 //Car Car = new Car() { Id = 5, BrandId = 5, ColorId = 5,Name = "Porsche",DailyPrice = 3500, Description = "new", ModelYear = 2023 };
 //carManager.Add(Car);
 
@@ -43,12 +44,20 @@ CarManager carManager = new CarManager(new EfCarDal());
 
 //}
 
-foreach (var car in carManager.GetCarDetails())
+CarManager carManager = new CarManager(new EfCarDal());
+var result = carManager.GetCarDetails();
+if (result.Success == true)
 {
-    Console.WriteLine("Car Name: " + car.CarName);
-    Console.WriteLine("Brand Name: " + car.BrandName);
-    Console.WriteLine("Color Name: " + car.ColorName);
-    Console.WriteLine("Car Daily Price: " + car.DailyPrice);
-    Console.WriteLine("----------------------");
-
+    foreach (var car in carManager.GetCarDetails().Data)
+    {
+        Console.WriteLine("Car Name: " + car.CarName);
+        Console.WriteLine("Brand Name: " + car.BrandName);
+        Console.WriteLine("Color Name: " + car.ColorName);
+        Console.WriteLine("Car Daily Price: " + car.DailyPrice);
+        Console.WriteLine("----------------------");
+    }
+}
+else
+{
+    Console.WriteLine(result.Message);
 }
