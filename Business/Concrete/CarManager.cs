@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
 using DataAccess.Abstract;
-using Entities.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -43,13 +43,9 @@ namespace Business.Concrete
             }
         }
 
-        public void Delete(Car car)
+        public List<CarDetailDto> GetCarDetails()
         {
-            throw new NotImplementedException();
-        }
-        public void Update(Car car)
-        {
-            throw new NotImplementedException();
+            return _carDal.GetCarDetails();
         }
     }
 }
