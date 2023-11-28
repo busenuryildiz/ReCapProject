@@ -20,7 +20,7 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
-       
+
 
         public IDataResult<List<Car>> GetAll()
         {
@@ -33,28 +33,43 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetCarsByBrandId(int BrandId)
         {
-            return new SuccessDataResult<List<Car>>( _carDal.GetAll(c => c.BrandId == BrandId));
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == BrandId));
         }
 
 
         public IDataResult<List<Car>> GetCarsByColorId(int ColorId)
         {
-            return new SuccessDataResult<List<Car>>( _carDal.GetAll(c => c.ColorId == ColorId));
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == ColorId));
         }
-        IResult Add(Car car)
+        public IResult Add(Car car)
         {
             if (car.Name.Length >= 2 && car.DailyPrice >= 0)
             {
-                return new SuccessResult(Messages.CarAdded);
                 _carDal.Add(car);
+                return new SuccessResult(Messages.CarAdded);
+
             }
+
             return new ErrorResult(Messages.CarNameInvalid);
 
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return new SuccessDataResult<List<CarDetailDto>>( _carDal.GetCarDetails());
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
+        }
+
+
+        public IResult Delete(Car car)
+        {
+            _carDal.Delete(car);
+            return new SuccessResult(Messages.CarDeleted);
+        }
+
+        public IResult Update(Car car)
+        {
+            _carDal.Update(car);
+            return new SuccessResult(Messages.CarUpdated);
         }
     }
 }
