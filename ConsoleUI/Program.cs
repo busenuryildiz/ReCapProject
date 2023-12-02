@@ -7,7 +7,7 @@ using Entities.Concrete;
 
 
 
-//foreach (var car in carManager.GetAll())
+//foreach (var car in carManager.GetAll().Data)
 //{
 //    Console.WriteLine("Car Id: " + car.Id);
 //    Console.WriteLine("Brand Id: " + car.BrandId);
